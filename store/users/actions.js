@@ -1,27 +1,26 @@
-import axios from "axios"
-import { createAsyncThunk } from "@reduxjs/toolkit"
+import { API_URL } from '@env'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import axios from 'axios'
+import { createAsyncThunk } from '@reduxjs/toolkit'
 
-const API_URL = process.env.API_URL
-
-const handleToken = () => {
-    const BEARER_TOKEN = localStorage.getItem("token")
+const handleToken = async () => {
+    const BEARER_TOKEN = await AsyncStorage.getItem('token')
 
     let config = {
         headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${BEARER_TOKEN}`,
         },
     }
     return config
 }
 
-const addUser = createAsyncThunk("addUser", async (user) => {
+const addUser = createAsyncThunk('addUser', async (user) => {
     try {
         const response = await axios.post(`${API_URL}/users/signup`, user)
-        console.log(response)
         return {
             user: response.data,
-            message: "Usuario creado con éxito",
+            message: 'Usuario creado con éxito',
         }
     } catch (error) {
         return {
@@ -31,28 +30,37 @@ const addUser = createAsyncThunk("addUser", async (user) => {
     }
 })
 
-const verifyUser = createAsyncThunk("verifyUser", async ({user_id, verify_code}) => {
-    try {
-        console.log(user_id, verify_code)
-        const response = await axios.get(`${API_URL}/users/verify_code`, {params: {user_id, verify_code}})
-        return {
-            response: {
-                message: "Usuario verificado!"
+const verifyUser = createAsyncThunk(
+    'verifyUser',
+    async ({ user_id, verify_code }) => {
+        try {
+            console.log(user_id, verify_code)
+            const response = await axios.get(`${API_URL}/users/verify_code`, {
+                params: { user_id, verify_code },
+            })
+            return {
+                response: {
+                    message: 'Usuario verificado!',
+                },
+            }
+        } catch (error) {
+            return {
+                message: 'Error al crear usuario!',
             }
         }
-    } catch (error) {
-        return {
-        message: "Error al crear usuario!"
     }
-    }
-})
+)
 
-const signIn = createAsyncThunk("signIn", async (user) => {
+const signIn = createAsyncThunk('signIn', async (user) => {
     try {
-        const response = await axios.post(`${API_URL}/users/signin`, user)
+        const response = await axios.post(
+            `${API_URL}/users/signin`,
+            user,
+            await handleToken()
+        )
         return {
             user: response.data,
-            message: "Logueado con éxito",
+            message: 'Logueado con éxito',
         }
     } catch (error) {
         return {
@@ -62,28 +70,69 @@ const signIn = createAsyncThunk("signIn", async (user) => {
     }
 })
 
-const signInToken = createAsyncThunk("signInToken", async (user) => {
+const signInToken = createAsyncThunk('signInToken', async (token) => {
     try {
-        let response = await axios.post(`${API_URL}/users/token`, user, handleToken())
+        const response = await axios.post(
+            `${API_URL}/users/token`,
+            token,
+            await handleToken()
+        )
         return {
-            response: { user: response.data },
-            message: "Usuario autenticado",
+            user: response.data,
+            message: 'Usuario autenticado',
         }
     } catch (error) {
-        console.log(error)
+        console.log(error.response.data)
         return {
-            response: { user: error.response.data },
-            message: "Error al autenticar usuario",
+            user: null,
+            message: 'Error al autenticar usuario',
+        }
+    }
+})
+
+const signout = createAsyncThunk('signout', async () => {
+    try {
+        const response = await axios.get(
+            `${API_URL}/users/signout`,
+            await handleToken()
+        )
+        return {
+            user: response.data,
+            message: 'Se ha cerrado sesión',
+        }
+    } catch (error) {
+        return {
+            user: null,
+            message: error.response.data.response,
+        }
+    }
+})
+
+const getProfile = createAsyncThunk('getProfile', async () => {
+    try {
+        const response = await axios.get(
+            `${API_URL}/users/profile`,
+            await handleToken()
+        )
+        return {
+            user: response.data,
+            message: 'Perfil actualizado',
+        }
+    } catch (error) {
+        return {
+            user: null,
+            message: error.response.data.response,
         }
     }
 })
 
 const userActions = {
-    handleToken,
     addUser,
     signIn,
     signInToken,
-    verifyUser
+    verifyUser,
+    signout,
+    getProfile,
 }
 
 export default userActions
