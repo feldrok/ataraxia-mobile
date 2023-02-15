@@ -18,9 +18,11 @@ const Signin = ({ navigation }) => {
             mail: email,
             password: password,
         }
-        await dispatch(signIn(data))
-        let token = storeUser.user?.response?.token
-        await AsyncStorage.setItem('token', token)
+        let response = await dispatch(signIn(data))
+        await AsyncStorage.setItem(
+            'token',
+            response.payload?.user?.response?.token
+        )
     }
 
     useEffect(() => {

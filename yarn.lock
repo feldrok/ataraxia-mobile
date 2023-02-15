@@ -3396,6 +3396,11 @@ extglob@^2.0.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
+fast-base64-decode@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/fast-base64-decode/-/fast-base64-decode-1.0.0.tgz"
+  integrity sha512-qwaScUgUGBYeDNRnbc/KyllVU88Jk1pRHPStuF/lO7B0/RTRLj7U0lkdTAutlBblY08rwZDff6tNU9cjv6j//Q==
+
 fast-deep-equal@^3.1.3:
   version "3.1.3"
   resolved "https://registry.npmjs.org/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz"
@@ -4411,6 +4416,11 @@ jsonfile@^6.0.1:
     universalify "^2.0.0"
   optionalDependencies:
     graceful-fs "^4.1.6"
+
+jwt-decode@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.npmjs.org/jwt-decode/-/jwt-decode-3.1.2.tgz"
+  integrity sha512-UfpWE/VZn0iP50d8cz9NrZLM9lSWhcJ+0Gt/nm4by88UL+J1SiKN8/5dkjMmbEzwL2CAe+67GsegCbIKtbp75A==
 
 kind-of@^3.0.2, kind-of@^3.0.3:
   version "3.2.2"
@@ -5857,6 +5867,13 @@ react-native-gesture-handler@*, "react-native-gesture-handler@>= 1.0.0", react-n
     lodash "^4.17.21"
     prop-types "^15.7.2"
 
+react-native-get-random-values@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.npmjs.org/react-native-get-random-values/-/react-native-get-random-values-1.8.0.tgz"
+  integrity sha512-H/zghhun0T+UIJLmig3+ZuBCvF66rdbiWUfRSNS6kv5oDSpa1ZiVyvRWtuPesQpT8dXj+Bv7WJRQOUP+5TB1sA==
+  dependencies:
+    fast-base64-decode "^1.0.0"
+
 react-native-gradle-plugin@^0.70.3:
   version "0.70.3"
   resolved "https://registry.npmjs.org/react-native-gradle-plugin/-/react-native-gradle-plugin-0.70.3.tgz"
@@ -5874,6 +5891,11 @@ react-native-pixel-perfect@^1.0.1:
   version "1.0.2"
   resolved "https://registry.npmjs.org/react-native-pixel-perfect/-/react-native-pixel-perfect-1.0.2.tgz"
   integrity sha512-0IvYCNkxuQbQC9q4tI+C3i6o38nbx916p7gBRBWuPxDhKBCuTkVV3VukcfW6vtjRlwQm6kwQcF9OtI+yUBt+YA==
+
+react-native-pure-jwt@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.npmjs.org/react-native-pure-jwt/-/react-native-pure-jwt-3.0.1.tgz"
+  integrity sha512-hc65Bm8vhDD8VwJAv36GIsPOI9zmlVm2gWXv42VrMiwRB1BxtloOoIF80THGVW6d4zufgTEdt92jkMQLrHsf6g==
 
 react-native-reanimated-carousel@^3.3.0:
   version "3.3.0"
@@ -5906,6 +5928,11 @@ react-native-reanimated-carousel@^3.3.0:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
 
+react-native-toast-message@^2.1.5:
+  version "2.1.5"
+  resolved "https://registry.npmjs.org/react-native-toast-message/-/react-native-toast-message-2.1.5.tgz"
+  integrity sha512-mk3rELtBEhrhWBCN6CTaw0gypgL9ZNauX3xx1LUs4uee9vc0pVsghrKxO57vroUCcNL2hDeZSLJWdQNMCkGeaQ==
+
 react-native-vector-icons@^9.*, react-native-vector-icons@^9.2.0:
   version "9.2.0"
   resolved "https://registry.npmjs.org/react-native-vector-icons/-/react-native-vector-icons-9.2.0.tgz"
@@ -5914,7 +5941,7 @@ react-native-vector-icons@^9.*, react-native-vector-icons@^9.2.0:
     prop-types "^15.7.2"
     yargs "^16.1.1"
 
-react-native@*, "react-native@^0.0.0-0 || 0.60 - 0.71 || 1000.0.0", react-native@>=0.59, react-native@>=0.6.0, react-native@0.70.5:
+react-native@*, "react-native@^0.0.0-0 || 0.60 - 0.71 || 1000.0.0", react-native@>=0.41.2, react-native@>=0.56, react-native@>=0.59, react-native@>=0.6.0, react-native@0.70.5:
   version "0.70.5"
   resolved "https://registry.npmjs.org/react-native/-/react-native-0.70.5.tgz"
   integrity sha512-5NZM80LC3L+TIgQX/09yiyy48S73wMgpIgN5cCv3XTMR394+KpDI3rBZGH4aIgWWuwijz31YYVF5504+9n2Zfw==
@@ -6615,6 +6642,11 @@ string-hash-64@^1.0.3:
   version "1.0.3"
   resolved "https://registry.npmjs.org/string-hash-64/-/string-hash-64-1.0.3.tgz"
   integrity sha512-D5OKWKvDhyVWWn2x5Y9b+37NUllks34q1dCDhk/vYcso9fmhs+Tl3KR/gE4v5UNj2UA35cnX4KdVVGkG1deKqw==
+
+string-hex@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/string-hex/-/string-hex-1.0.0.tgz"
+  integrity sha512-BVj+jcFkid8p2hDu96wRks4U3Dz/OfPnNR4vmABQqVIZgeSRAXYB5/zGrYT/8QhGhcEi/fMnjtLDz0rcJ5pEIQ==
 
 string-width@^4.1.0, string-width@^4.2.0:
   version "4.2.3"
