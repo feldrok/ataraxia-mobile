@@ -1,4 +1,4 @@
-import { FlatList, Text, View } from 'react-native'
+import { Button, FlatList, Text, View } from 'react-native'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -12,7 +12,7 @@ import productActions from '../store/products/actions'
 const { getProducts } = productActions
 const { getCategories } = categoryActions
 
-const Home = () => {
+const Home = ({ navigation }) => {
     const dispatch = useDispatch()
     const storeProducts = useSelector((state) => state.products)
     const storeCategories = useSelector((state) => state.categories)
@@ -46,18 +46,11 @@ const Home = () => {
                             horizontal
                             showsHorizontalScrollIndicator={false}
                             className="flex-1 flex mt-2"
-                            keyExtractor={(item) => item.name}
-                            renderItem={({ item }) => (
+                            keyExtractor={(product) => product.name}
+                            renderItem={(product) => (
                                 <ProductCard
-                                    name={item.name}
-                                    price={item.price}
-                                    image={item.image}
-                                    abv={item.abv}
-                                    ibu={item.ibu}
-                                    ml={item.ml}
-                                    packSize={item.packSize}
+                                    product={product}
                                     category={category.name}
-                                    stock={item.stock}
                                 />
                             )}
                         />

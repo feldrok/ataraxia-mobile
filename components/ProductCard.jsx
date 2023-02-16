@@ -1,40 +1,84 @@
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
 
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import NumericInput from 'react-native-numeric-input'
 import React from 'react'
+import { Toast } from 'react-native-toast-message/lib/src/Toast'
+import cartActions from '../store/carts/actions'
 
-const ProductCard = ({
-    name,
-    image,
-    price,
-    abv,
-    ibu,
-    category,
-    ml,
-    packSize,
-    stock,
-}) => {
+const { createCart, addProductToCart, getCart } = cartActions
+
+const ProductCard = ({ product, category }) => {
     const [quantity, setQuantity] = React.useState(1)
+    const [loading, setLoading] = React.useState(false)
+    const storeCart = useSelector((store) => store.cart)
+    const storeUser = useSelector((store) => store.user)
+    const dispatch = useDispatch()
+
+    let image = product?.item?.image
 
     let bgColor
     let bgHoverColor
     let textColor
-    if (name === 'Scottish Ale') {
+    if (product?.item?.name === 'Scottish Ale') {
         bgColor = 'bg-primary-500'
         bgHoverColor = 'hover:bg-primary-300'
         textColor = 'text-primary-500'
-    } else if (name === 'IPA') {
+    } else if (product?.item?.name === 'IPA') {
         bgColor = 'bg-secondary-500'
         bgHoverColor = 'hover:bg-secondary-300'
         textColor = 'text-secondary-500'
-    } else if (name === 'Stout') {
+    } else if (product?.item?.name === 'Stout') {
         bgColor = 'bg-tertiary-500'
         bgHoverColor = 'hover:bg-tertiary-300'
         textColor = 'text-tertiary-500'
-    } else if (name === 'Blonde Ale') {
+    } else if (product?.item?.name === 'Blonde Ale') {
         bgColor = 'bg-quaternary-500'
         bgHoverColor = 'hover:bg-quaternary-300'
         textColor = 'text-quaternary-500'
+    }
+
+    const handleAdd = async () => {
+        let tokenId = storeUser.user.response?.user?.id
+        let guestToken = await AsyncStorage.getItem('guestToken')
+        console.log(guestToken)
+        let addProduct = {
+            product_id: product?.item?._id,
+            quantity: quantity,
+        }
+        try {
+            setLoading(true)
+            if (product?.item?.stock === 0) {
+                Toast.show({
+                    text1: 'No hay stock, intenta más tarde',
+                })
+            } else {
+                if (storeCart.cart.cart?.response.length === 0) {
+                    await dispatch(
+                        createCart({
+                            id: tokenId ? tokenId : guestToken,
+                            data: addProduct,
+                        })
+                    )
+                } else {
+                    await dispatch(
+                        addProductToCart({
+                            id: tokenId ? tokenId : guestToken,
+                            product: addProduct,
+                        })
+                    )
+                    Toast.show({
+                        text1: 'Agregado al carrito',
+                    })
+                }
+            }
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setLoading(false)
+            await dispatch(getCart(tokenId ? tokenId : guestToken))
+        }
     }
 
     const renderDetails = (category) => {
@@ -43,14 +87,18 @@ const ProductCard = ({
                 <>
                     <View className="p-2">
                         <Text className={`text-2xl font-bold ${textColor}`}>
-                            {name}
+                            {product?.item?.name}
                         </Text>
                         <View className="flex justify-between">
-                            <Text className="text-gray-500">IBU {ibu}</Text>
-                            <Text className="text-gray-500">ABV {abv}%</Text>
+                            <Text className="text-gray-500">
+                                IBU {product?.item?.ibu}
+                            </Text>
+                            <Text className="text-gray-500">
+                                ABV {product?.item?.abv}%
+                            </Text>
                         </View>
                         <Text className="text-gray-600 font-medium text-xl">
-                            ${price}
+                            ${product?.item?.price}
                         </Text>
                     </View>
                     <View
@@ -58,17 +106,20 @@ const ProductCard = ({
                     >
                         <NumericInput
                             onChange={(quantity) => setQuantity(quantity)}
-                            value={quantity}
+                            value={product?.item?.stock !== 0 ? quantity : 0}
                             iconSize={5}
                             rounded
                             totalHeight={45}
                             minValue={1}
-                            maxValue={stock}
+                            maxValue={product?.item?.stock}
                             step={1}
                             valueType="integer"
                             textColor="white"
                         />
-                        <TouchableOpacity className="w-full h-fullflex flex-1 items-center justify-center p-4 mt-2">
+                        <TouchableOpacity
+                            className="w-full h-fullflex flex-1 items-center justify-center p-4 mt-2"
+                            onPress={handleAdd}
+                        >
                             <Text className="text-white font-bold">
                                 Agregar al carro
                             </Text>
@@ -81,14 +132,14 @@ const ProductCard = ({
                 <>
                     <View className="p-2">
                         <Text className={`text-2xl font-bold text-gray-700`}>
-                            {name}
+                            {product?.item?.name}
                         </Text>
                         <View className="flex flex-1 justify-between text-gray-500">
-                            <Text>{packSize} unidades</Text>
-                            <Text>{ml}ml c/botella</Text>
+                            <Text>{product?.item?.packSize} unidades</Text>
+                            <Text>{product?.item?.ml}ml c/botella</Text>
                         </View>
                         <Text className="text-gray-600 font-medium text-xl">
-                            ${price}
+                            ${product?.item?.price}
                         </Text>
                     </View>
                     <View
@@ -96,17 +147,20 @@ const ProductCard = ({
                     >
                         <NumericInput
                             onChange={(quantity) => setQuantity(quantity)}
-                            value={quantity}
+                            value={product?.item?.stock !== 0 ? quantity : 0}
                             iconSize={5}
                             rounded
                             totalHeight={45}
                             minValue={1}
-                            maxValue={stock}
+                            maxValue={product?.item?.stock}
                             step={1}
                             valueType="integer"
                             textColor="white"
                         />
-                        <TouchableOpacity className="w-full h-fullflex flex-1 items-center justify-center p-4 mt-2">
+                        <TouchableOpacity
+                            className="w-full h-fullflex flex-1 items-center justify-center p-4 mt-2"
+                            onPress={handleAdd}
+                        >
                             <Text className="text-white font-bold">
                                 Agregar al carro
                             </Text>
@@ -119,10 +173,10 @@ const ProductCard = ({
                 <>
                     <View className="p-2">
                         <Text className={`text-2xl font-bold text-gray-700`}>
-                            {name}
+                            {product?.item?.name}
                         </Text>
                         <Text className="text-gray-600 font-medium text-xl">
-                            ${price}
+                            ${product?.item?.price}
                         </Text>
                     </View>
                     <View
@@ -130,15 +184,18 @@ const ProductCard = ({
                     >
                         <NumericInput
                             onChange={(quantity) => setQuantity(quantity)}
-                            value={quantity}
+                            value={product?.item?.stock !== 0 ? quantity : 0}
                             iconSize={5}
                             rounded
                             totalHeight={45}
                             minValue={1}
-                            maxValue={stock}
+                            maxValue={product?.item?.stock}
                             textColor="white"
                         />
-                        <TouchableOpacity className="w-full h-fullflex flex-1 items-center justify-center p-4 mt-2">
+                        <TouchableOpacity
+                            className="w-full h-fullflex flex-1 items-center justify-center p-4 mt-2"
+                            onPress={handleAdd}
+                        >
                             <Text className="text-white font-bold">
                                 Agregar al carro
                             </Text>
@@ -150,7 +207,7 @@ const ProductCard = ({
     }
 
     if (image.length > 0) {
-        image = image[0]
+        image = product?.item?.image[0]
     }
 
     return (
