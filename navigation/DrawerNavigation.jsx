@@ -2,6 +2,7 @@ import Home from '../screens/Home'
 import React from 'react'
 import Signin from "../screens/Signin"
 import Signup from "../screens/Signup"
+import VerifyAccount from '../screens/VerifyUser'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 
 const Drawer = createDrawerNavigator()

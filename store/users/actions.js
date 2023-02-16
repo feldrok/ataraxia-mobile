@@ -42,7 +42,7 @@ const verifyUser = createAsyncThunk("verifyUser", async ({user_id, verify_code})
         }
     } catch (error) {
         return {
-        message: "Error al crear usuario!"
+        message: "Error al verificar usuario!"
     }
     }
 })

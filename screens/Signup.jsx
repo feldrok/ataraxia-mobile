@@ -23,23 +23,6 @@ const Signup = ({ navigation }) => {
     const userStore = useSelector((state) => state.user)
     const dispatch = useDispatch()
 
-/*     const handleSignUp = async () => {
-        let user = {
-            name: name,
-            lastName: lastName,
-            dni: dni,
-            mail: email,
-            password: password,
-        }
-        let response = dispatch(addUser(user))
-        let createdUser = response.payload?.response?.user.response
-        if (response) {
-            alert('Usuario creado!')
-        } else {
-            alert('Error al crear usuario')
-        }
-    } */
-
     const handleSignUp = async (e) => {
         let data = {
             name: name,
