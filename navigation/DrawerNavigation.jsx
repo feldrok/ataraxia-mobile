@@ -22,6 +22,7 @@ import hex from 'string-hex'
 import randomstring from 'randomstring'
 import { useNavigation } from '@react-navigation/native'
 import userActions from '../store/users/actions'
+import Checkout from '../screens/Checkout'
 
 const { signInToken, signout } = userActions
 const { getCart } = cartActions
@@ -150,6 +151,13 @@ const DrawerNavigation = () => {
                 }}
                 name="Cart"
                 component={Cart}
+            />
+            <Stack.Screen
+                options={{
+                    title: 'Checkout',
+                }}
+                name="Checkout"
+                component={Checkout}
             />
         </Stack.Navigator>
     )

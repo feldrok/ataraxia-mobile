@@ -14,7 +14,7 @@ const CartItem = ({ product }) => {
     const storeUser = useSelector((store) => store.user)
     const [quantity, setQuantity] = React.useState(product?.quantity)
     const [loading, setLoading] = React.useState(false)
-    const producto = product.product_id
+    const producto = product?.product_id
 
     const handleUpdate = async (quant) => {
         let tokenId = storeUser.user.response?.user?.id

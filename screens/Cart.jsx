@@ -7,6 +7,8 @@ import CartItem from '../components/CartItem'
 import { ScrollView } from 'react-native-gesture-handler'
 import cartActions from '../store/carts/actions'
 import { useFocusEffect } from '@react-navigation/native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import Checkout from './Checkout'
 
 const { getCart } = cartActions
 
@@ -15,6 +17,7 @@ const Cart = ({ navigation }) => {
     const storeUser = useSelector((store) => store.user)
     const dispatch = useDispatch()
     const products = storeCart.cart.cart?.response[0]?.products
+    const Stack = createNativeStackNavigator()
 
     return (
         <View className="flex flex-col h-full justify-between items-center">
@@ -33,9 +36,9 @@ const Cart = ({ navigation }) => {
                             : 0}
                     </Text>
                 </View>
-                <TouchableOpacity className="rounded-md border-2 border-primary-500 bg-primary-500 py-2 px-4 text-center">
-                    <Text className="text-white text-lg">Proceder al pago</Text>
-                </TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('Checkout')} className="rounded-md border-2 border-primary-500 bg-primary-500 py-2 px-4 text-center">
+                        <Text onPress={() => navigation.navigate('Checkout')} className="text-white text-lg">Proceder al pago</Text>
+                    </TouchableOpacity>
             </View>
         </View>
     )
