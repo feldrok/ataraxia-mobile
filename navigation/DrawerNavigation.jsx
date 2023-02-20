@@ -9,6 +9,7 @@ import {
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import AboutUs from '../screens/AboutUs'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Cart from '../screens/Cart'
 import Home from '../screens/Home'
@@ -132,6 +133,7 @@ const DrawerNavigation = () => {
                             name="Iniciar Sesión"
                             component={Signin}
                         />
+                        <Drawer.Screen name="Sobre Nosotros" component={AboutUs} />
                     </>
                 )}
             </Drawer.Navigator>
