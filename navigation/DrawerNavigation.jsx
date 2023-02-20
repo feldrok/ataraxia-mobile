@@ -16,6 +16,7 @@ import Ionicons from '@expo/vector-icons/Ionicons'
 import Signin from '../screens/Signin'
 import Signup from '../screens/Signup'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
+import VerifyAccount from '../screens/VerifyUser'
 import cartActions from '../store/carts/actions'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import hex from 'string-hex'
@@ -25,11 +26,6 @@ import userActions from '../store/users/actions'
 
 const { signInToken, signout } = userActions
 const { getCart } = cartActions
-import React from 'react'
-import Signin from "../screens/Signin"
-import Signup from "../screens/Signup"
-import VerifyAccount from '../screens/VerifyUser'
-import { createDrawerNavigator } from '@react-navigation/drawer'
 
 const Drawer = createDrawerNavigator()
 const Stack = createNativeStackNavigator()
