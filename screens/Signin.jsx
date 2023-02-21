@@ -27,7 +27,7 @@ const Signin = ({ navigation }) => {
 
     useEffect(() => {
         if (storeUser.message === 'Logueado con éxito') {
-            navigation.navigate('Home')
+            navigation.navigate('Inicio')
         }
     }, [storeUser.message])
 

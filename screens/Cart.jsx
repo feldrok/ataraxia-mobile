@@ -18,7 +18,6 @@ const Cart = ({ navigation }) => {
     const storeUser = useSelector((store) => store.user)
     const dispatch = useDispatch()
     const products = storeCart.cart.cart?.response[0]?.products
-    console.log(storeUser.user)
 
     const checkToken = async () => {
         return await AsyncStorage.getItem('guestToken')
@@ -47,6 +46,8 @@ const Cart = ({ navigation }) => {
                         $
                         {storeCart.cart?.cart?.response[0]?.total_price
                             ? storeCart.cart?.cart?.response[0]?.total_price
+                                  .toString()
+                                  .replace(/\B(?=(\d{3})+(?!\d))/g, '.')
                             : 0}
                     </Text>
                 </View>

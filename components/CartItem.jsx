@@ -87,7 +87,11 @@ const CartItem = ({ product }) => {
                 </Text>
                 <Text>{producto?.ml ? `${producto.ml} ml` : null}</Text>
                 <Text className="font-medium">
-                    {producto?.price ? `$ ${producto.price} c/u` : null}
+                    {producto?.price
+                        ? `$ ${producto.price
+                              .toString()
+                              .replace(/\B(?=(\d{3})+(?!\d))/g, '.')} c/u`
+                        : null}
                 </Text>
                 <View>
                     <NumericInput
