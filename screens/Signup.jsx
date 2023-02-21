@@ -79,7 +79,9 @@ const Signup = ({ navigation }) => {
                 </TouchableOpacity>
                 <View className="flex flex-row items-center justify-center m-4">
                     <Text>Ya tienes una cuenta? </Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('Iniciar Sesión')}
+                    >
                         <Text className="text-primary-500 font-bold">
                             Inicia sesión!
                         </Text>
