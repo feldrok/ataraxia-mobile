@@ -14,7 +14,7 @@ const CartItem = ({ product }) => {
     const storeUser = useSelector((store) => store.user)
     const [quantity, setQuantity] = React.useState(product?.quantity)
     const [loading, setLoading] = React.useState(false)
-    const producto = product.product_id
+    const producto = product?.product_id
 
     const handleUpdate = async (quant) => {
         let tokenId = storeUser.user.response?.user?.id
@@ -87,7 +87,11 @@ const CartItem = ({ product }) => {
                 </Text>
                 <Text>{producto?.ml ? `${producto.ml} ml` : null}</Text>
                 <Text className="font-medium">
-                    {producto?.price ? `$ ${producto.price} c/u` : null}
+                    {producto?.price
+                        ? `$ ${producto.price
+                              .toString()
+                              .replace(/\B(?=(\d{3})+(?!\d))/g, '.')} c/u`
+                        : null}
                 </Text>
                 <View>
                     <NumericInput

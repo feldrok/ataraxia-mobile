@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import NumericInput from 'react-native-numeric-input'
-import Rating from './Rating'
 import React from 'react'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
 import cartActions from '../store/carts/actions'
+import { useNavigation } from '@react-navigation/native'
 
 const { createCart, addProductToCart, getCart } = cartActions
 
@@ -15,28 +15,24 @@ const ProductCard = ({ product, category }) => {
     const [loading, setLoading] = React.useState(false)
     const storeCart = useSelector((store) => store.cart)
     const storeUser = useSelector((store) => store.user)
+    const navigation = useNavigation()
     const dispatch = useDispatch()
 
     let image = product?.item?.image
 
     let bgColor
-    let bgHoverColor
     let textColor
     if (product?.item?.name === 'Scottish Ale') {
         bgColor = 'bg-primary-500'
-        bgHoverColor = 'hover:bg-primary-300'
         textColor = 'text-primary-500'
     } else if (product?.item?.name === 'IPA') {
         bgColor = 'bg-secondary-500'
-        bgHoverColor = 'hover:bg-secondary-300'
         textColor = 'text-secondary-500'
     } else if (product?.item?.name === 'Stout') {
         bgColor = 'bg-tertiary-500'
-        bgHoverColor = 'hover:bg-tertiary-300'
         textColor = 'text-tertiary-500'
     } else if (product?.item?.name === 'Blonde Ale') {
         bgColor = 'bg-quaternary-500'
-        bgHoverColor = 'hover:bg-quaternary-300'
         textColor = 'text-quaternary-500'
     }
 
@@ -90,7 +86,6 @@ const ProductCard = ({ product, category }) => {
                         <Text className={`text-2xl font-bold ${textColor}`}>
                             {product?.item?.name}
                         </Text>
-                            <Rating />
                         <View className="flex justify-between">
                             <Text className="text-gray-500">
                                 IBU {product?.item?.ibu}
@@ -100,11 +95,14 @@ const ProductCard = ({ product, category }) => {
                             </Text>
                         </View>
                         <Text className="text-gray-600 font-medium text-xl">
-                            ${product?.item?.price}
+                            $
+                            {product?.item?.price
+                                .toString()
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
                         </Text>
                     </View>
                     <View
-                        className={`flex flex-1 ${bgColor} ${bgHoverColor} duration-300 p-2 cursor-pointer rounded-sm items-center justify-center`}
+                        className={`flex flex-1 ${bgColor} duration-300 p-2 cursor-pointer rounded-sm items-center justify-center`}
                     >
                         <NumericInput
                             onChange={(quantity) => setQuantity(quantity)}
@@ -141,11 +139,14 @@ const ProductCard = ({ product, category }) => {
                             <Text>{product?.item?.ml}ml c/botella</Text>
                         </View>
                         <Text className="text-gray-600 font-medium text-xl">
-                            ${product?.item?.price}
+                            $
+                            {product?.item?.price
+                                .toString()
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
                         </Text>
                     </View>
                     <View
-                        className={`flex bg-gray-700 hover:bg-gray-500 duration-300 p-2 cursor-pointer rounded-sm items-center justify-center`}
+                        className={`flex bg-gray-700 duration-300 p-2 cursor-pointer rounded-sm items-center justify-center`}
                     >
                         <NumericInput
                             onChange={(quantity) => setQuantity(quantity)}
@@ -178,11 +179,14 @@ const ProductCard = ({ product, category }) => {
                             {product?.item?.name}
                         </Text>
                         <Text className="text-gray-600 font-medium text-xl">
-                            ${product?.item?.price}
+                            $
+                            {product?.item?.price
+                                .toString()
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
                         </Text>
                     </View>
                     <View
-                        className={`flex bg-gray-700 hover:bg-gray-500 duration-300 p-2 cursor-pointer rounded-sm items-center justify-center`}
+                        className={`flex bg-gray-700 duration-300 p-2 cursor-pointer rounded-sm items-center justify-center`}
                     >
                         <NumericInput
                             onChange={(quantity) => setQuantity(quantity)}
@@ -214,9 +218,21 @@ const ProductCard = ({ product, category }) => {
 
     return (
         <View className="w-64 shadow-md m-2 bg-white">
-            <View className="rounded-sm">
+            <TouchableOpacity
+                onPress={() =>
+                    navigation.navigate({
+                        name: 'Producto',
+                        params: {
+                            product: product,
+                            category: category,
+                        },
+                        merge: true,
+                    })
+                }
+                className="rounded-sm"
+            >
                 <Image source={{ uri: `${image}` }} className="w-64 h-64" />
-            </View>
+            </TouchableOpacity>
             {renderDetails(category)}
         </View>
     )
