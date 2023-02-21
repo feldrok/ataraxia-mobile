@@ -12,22 +12,21 @@ import { useDispatch, useSelector } from 'react-redux'
 import AboutUs from '../screens/AboutUs'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Cart from '../screens/Cart'
+import Checkout from '../screens/Checkout'
 import Home from '../screens/Home'
 import Ionicons from '@expo/vector-icons/Ionicons'
+import Product from '../screens/Product'
 import Signin from '../screens/Signin'
 import Signup from '../screens/Signup'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
 import VerifyAccount from '../screens/VerifyUser'
-import cartActions from '../store/carts/actions'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import hex from 'string-hex'
 import randomstring from 'randomstring'
 import { useNavigation } from '@react-navigation/native'
 import userActions from '../store/users/actions'
-import Checkout from '../screens/Checkout'
 
 const { signInToken, signout } = userActions
-const { getCart } = cartActions
 
 const Drawer = createDrawerNavigator()
 const Stack = createNativeStackNavigator()
@@ -106,7 +105,7 @@ const DrawerNavigation = () => {
     const DrawerNav = () => {
         return (
             <Drawer.Navigator
-                initialRouteName="Home"
+                initialRouteName="Inicio"
                 screenOptions={{
                     headerRight: () => (
                         <Ionicons
@@ -114,7 +113,7 @@ const DrawerNavigation = () => {
                             size={30}
                             color="#E0003F"
                             style={{ marginRight: 10 }}
-                            onPress={() => navigation.navigate('Cart')}
+                            onPress={() => navigation.navigate('Carro')}
                         />
                     ),
                     drawerType: 'slide',
@@ -126,15 +125,16 @@ const DrawerNavigation = () => {
                 }}
                 drawerContent={(props) => <CustomDrawerContent {...props} />}
             >
-                <Drawer.Screen name="Home" component={Home} />
-                {isLogged ? null : (
+                <Drawer.Screen name="Inicio" component={Home} />
+                {isLogged ? (
+                    <Drawer.Screen name="Sobre Nosotros" component={AboutUs} />
+                ) : (
                     <>
                         <Drawer.Screen name="Crear Cuenta" component={Signup} />
                         <Drawer.Screen
                             name="Iniciar Sesión"
                             component={Signin}
                         />
-                        <Drawer.Screen name="Sobre Nosotros" component={AboutUs} />
                     </>
                 )}
             </Drawer.Navigator>
@@ -148,20 +148,44 @@ const DrawerNavigation = () => {
                 name="Drawer"
                 component={DrawerNav}
             />
-            <Stack.Screen
-                options={{
-                    headerTintColor: '#E0003F',
-                }}
-                name="Cart"
-                component={Cart}
-            />
-            <Stack.Screen
-                options={{
-                    title: 'Checkout',
-                }}
-                name="Checkout"
-                component={Checkout}
-            />
+            <Stack.Group screenOptions={{ presentation: 'modal' }}>
+                <Stack.Screen
+                    options={{
+                        headerTintColor: '#E0003F',
+                    }}
+                    name="Carro"
+                    component={Cart}
+                />
+                <Stack.Screen
+                    options={{
+                        headerTintColor: '#E0003F',
+                    }}
+                    name="Checkout"
+                    component={Checkout}
+                />
+                <Stack.Screen
+                    options={{
+                        headerTintColor: '#E0003F',
+                        headerRight: () => (
+                            <Ionicons
+                                name="cart-outline"
+                                size={30}
+                                color="#E0003F"
+                                style={{ marginRight: 10 }}
+                                onPress={() => navigation.navigate('Carro')}
+                            />
+                        ),
+                        drawerType: 'slide',
+                        headerTintColor: '#E0003F',
+                        drawerActiveBackgroundColor: '#E0003F',
+                        drawerActiveTintColor: '#fff',
+                        drawerInactiveBackgroundColor: '#fff',
+                        drawerInactiveTintColor: '#E0003F',
+                    }}
+                    name="Producto"
+                    component={Product}
+                />
+            </Stack.Group>
         </Stack.Navigator>
     )
 }
