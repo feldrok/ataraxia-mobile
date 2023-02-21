@@ -3,14 +3,16 @@ import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useNavigation } from '@react-navigation/native'
 import userActions from '../store/users/actions'
 
 const { signIn, signInToken } = userActions
 
-const Signin = ({ navigation }) => {
+const Signin = () => {
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
     const storeUser = useSelector((state) => state.user)
+    const navigation = useNavigation()
     const dispatch = useDispatch()
 
     const handleSignIn = async (e) => {
@@ -63,7 +65,9 @@ const Signin = ({ navigation }) => {
             </View>
             <View className="flex flex-row items-center justify-center m-4">
                 <Text>Aún no creaste tu cuenta? </Text>
-                <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
+                <TouchableOpacity
+                    onPress={() => navigation.navigate('Crear Cuenta')}
+                >
                     <Text className="text-primary-500 font-bold">
                         Registrate!
                     </Text>
