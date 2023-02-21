@@ -5897,6 +5897,12 @@
   "resolved" "https://registry.npmjs.org/react-native-pure-jwt/-/react-native-pure-jwt-3.0.1.tgz"
   "version" "3.0.1"
 
+"react-native-radio-buttons-group@^2.3.1":
+  "integrity" "sha512-hevotFmsttU9q3tPzNOmHyC/RguBv+XFLRNHlxGuLTKMeblgEtPBOYBxq1HWVRcNA3DjWYsE0z1zvFTs54Lgzg=="
+  "resolved" "https://registry.npmjs.org/react-native-radio-buttons-group/-/react-native-radio-buttons-group-2.3.1.tgz"
+  "version" "2.3.1"
+  dependencies:
+    "lodash.isequal" "4.5.0"
 "react-native-reanimated-carousel@^3.3.0":
   "integrity" "sha512-rprUl+LqWoXyH/8OvHv+m9Kol2YORHEnz7tvRum+o4ciCUCcYnafQBbSqG44RMllOCqm3WOAcuEX5p8a7W3ZZw=="
   "resolved" "https://registry.npmjs.org/react-native-reanimated-carousel/-/react-native-reanimated-carousel-3.3.0.tgz"
