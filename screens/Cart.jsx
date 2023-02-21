@@ -4,8 +4,10 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import CartItem from '../components/CartItem'
+import Checkout from './Checkout'
 import { ScrollView } from 'react-native-gesture-handler'
 import cartActions from '../store/carts/actions'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { useEffect } from 'react'
 import { useFocusEffect } from '@react-navigation/native'
 
@@ -48,8 +50,16 @@ const Cart = ({ navigation }) => {
                             : 0}
                     </Text>
                 </View>
-                <TouchableOpacity className="rounded-md border-2 border-primary-500 bg-primary-500 py-2 px-4 text-center">
-                    <Text className="text-white text-lg">Proceder al pago</Text>
+                <TouchableOpacity
+                    onPress={() => navigation.navigate('Checkout')}
+                    className="rounded-md border-2 border-primary-500 bg-primary-500 py-2 px-4 text-center"
+                >
+                    <Text
+                        onPress={() => navigation.navigate('Checkout')}
+                        className="text-white text-lg"
+                    >
+                        Proceder al pago
+                    </Text>
                 </TouchableOpacity>
             </View>
         </View>

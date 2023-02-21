@@ -9,6 +9,7 @@ import {
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import AboutUs from '../screens/AboutUs'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Cart from '../screens/Cart'
 import Home from '../screens/Home'
@@ -16,12 +17,14 @@ import Ionicons from '@expo/vector-icons/Ionicons'
 import Signin from '../screens/Signin'
 import Signup from '../screens/Signup'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
+import VerifyAccount from '../screens/VerifyUser'
 import cartActions from '../store/carts/actions'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import hex from 'string-hex'
 import randomstring from 'randomstring'
 import { useNavigation } from '@react-navigation/native'
 import userActions from '../store/users/actions'
+import Checkout from '../screens/Checkout'
 
 const { signInToken, signout } = userActions
 const { getCart } = cartActions
@@ -131,6 +134,7 @@ const DrawerNavigation = () => {
                             name="Iniciar Sesión"
                             component={Signin}
                         />
+                        <Drawer.Screen name="Sobre Nosotros" component={AboutUs} />
                     </>
                 )}
             </Drawer.Navigator>
@@ -150,6 +154,13 @@ const DrawerNavigation = () => {
                 }}
                 name="Cart"
                 component={Cart}
+            />
+            <Stack.Screen
+                options={{
+                    title: 'Checkout',
+                }}
+                name="Checkout"
+                component={Checkout}
             />
         </Stack.Navigator>
     )
