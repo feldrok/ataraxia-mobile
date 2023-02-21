@@ -9,28 +9,37 @@ import ratingActions from '../store/ratings/actions'
 
 const { createRating, getProductRating, getUserRating } = ratingActions
 
-export default function Rating () {
+export default function Rating ({producto}) {
     const [rating, setRating] = React.useState(0)
     const ratingStore = useSelector((store) => store.ratings)
+    const storeProduct = useSelector((store) => store.products)
     const dispatch = useDispatch()
     console.log(ratingStore)
+    console.log(storeProduct)
+    console.log(producto._id)
+    
+    useEffect(() => {
+        dispatch(getProductRating(producto._id))
+    }, [])
     
     useEffect(() => {
         if (ratingStore.message !== 'Rating encontrado') {
-            dispatch(getProductRating(ratingStore.productRating?.id))
+            dispatch(getProductRating(producto._id))
         }
         if (ratingStore.message === 'Rating encontrado') {
             setRating(ratingStore.productRating?.response)
         }
     }, [ratingStore])
 
+
     const handleChange = (selectedValue) => {
+        console.log(selectedValue)
         try {
-            dispatch(createRating({ product_id: ratingStore.productRating?.id, rating: selectedValue }))
+            dispatch(createRating({ product_id: producto._id, rating: selectedValue }))
         } catch (error) {
             console.log(error)
         } finally {
-            dispatch(getProductRating(ratingStore.productRating?.id))
+            dispatch(getProductRating(producto._id))
         }
     }
 
@@ -42,9 +51,8 @@ export default function Rating () {
   ); */
     return (
         <View className="flex flex-row gap-2 items-center">
-            <StarRating rating={Math.floor(rating)} onChange={handleChange} />
+            <StarRating enableHalfStar={false} rating={Math.floor(rating)} onChange={handleChange} />
             <Text className="text-lg">{`(${rating})`}</Text>
         </View>
     )
-    console.log(rating)
 }

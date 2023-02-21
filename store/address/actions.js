@@ -1,10 +1,10 @@
+import { API_URL } from "@env"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
-const API_URL = process.env.REACT_APP_API_URL
-
 const handleToken = () => {
-    const BEARER_TOKEN = localStorage.getItem('token')
+    const BEARER_TOKEN = AsyncStorage.getItem('token')
 
     let config = {
         headers: {

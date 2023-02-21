@@ -99,7 +99,7 @@ const Product = ({ navigation, route }) => {
                 >
                     {producto.name}
                 </Text>
-                <Rating />
+                <Rating producto={producto} />
                 <Text className="text-gray-600 text-lg">
                     {producto.description}
                 </Text>
