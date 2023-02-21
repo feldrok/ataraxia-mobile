@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import NumericInput from 'react-native-numeric-input'
+import Rating from './Rating'
 import React from 'react'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
 import cartActions from '../store/carts/actions'
@@ -89,6 +90,7 @@ const ProductCard = ({ product, category }) => {
                         <Text className={`text-2xl font-bold ${textColor}`}>
                             {product?.item?.name}
                         </Text>
+                            <Rating />
                         <View className="flex justify-between">
                             <Text className="text-gray-500">
                                 IBU {product?.item?.ibu}
