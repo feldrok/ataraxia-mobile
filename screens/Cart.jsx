@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import CartItem from '../components/CartItem'
 import { ScrollView } from 'react-native-gesture-handler'
 import cartActions from '../store/carts/actions'
+import { useEffect } from 'react'
 import { useFocusEffect } from '@react-navigation/native'
 
 const { getCart } = cartActions
@@ -15,6 +16,20 @@ const Cart = ({ navigation }) => {
     const storeUser = useSelector((store) => store.user)
     const dispatch = useDispatch()
     const products = storeCart.cart.cart?.response[0]?.products
+    console.log(storeUser.user)
+
+    const checkToken = async () => {
+        return await AsyncStorage.getItem('guestToken')
+    }
+
+    useEffect(() => {
+        if (storeUser.user?.response?.user?.id) {
+            dispatch(getCart(storeUser.user?.response?.user?.id))
+        } else {
+            let guestToken = checkToken()
+            dispatch(getCart(guestToken))
+        }
+    }, [])
 
     return (
         <View className="flex flex-col h-full justify-between items-center">
