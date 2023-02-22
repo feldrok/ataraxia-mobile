@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import NumericInput from 'react-native-numeric-input'
+import Rating from '../components/Rating'
 import React from 'react'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
 import cartActions from '../store/carts/actions'
@@ -98,7 +99,7 @@ const Product = ({ navigation, route }) => {
                 >
                     {producto.name}
                 </Text>
-                {/* Rating Component HERE */}
+                <Rating producto={producto} />
                 <Text className="text-gray-600 text-lg">
                     {producto.description}
                 </Text>

@@ -1,12 +1,14 @@
 import { API_URL } from '@env'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
-const handleToken = () => {
-    const BEARER_TOKEN = localStorage.getItem('token')
+const handleToken = async () => {
+    const BEARER_TOKEN = await AsyncStorage.getItem('token')
 
     let config = {
         headers: {
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${BEARER_TOKEN}`,
         },
     }
@@ -18,7 +20,7 @@ const createRating = createAsyncThunk('rating/createRating', async (data) => {
         const response = await axios.post(
             `${API_URL}/rating`,
             data,
-            handleToken()
+            await handleToken()
         )
         return {
             rating: response.data,
@@ -38,7 +40,7 @@ const getProductRating = createAsyncThunk(
         try {
             const response = await axios.get(
                 `${API_URL}/rating/${id}`,
-                handleToken()
+                await handleToken()
             )
             return {
                 rating: response.data,
@@ -57,7 +59,7 @@ const getUserRating = createAsyncThunk('rating/getUserRating', async (id) => {
     try {
         const response = await axios.get(
             `${API_URL}/rating/user/${id}`,
-            handleToken()
+            await handleToken()
         )
         return {
             rating: response.data,

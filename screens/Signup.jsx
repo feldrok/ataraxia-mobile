@@ -64,7 +64,7 @@ const Signup = ({ navigation }) => {
                 />
                 <TextInput
                     className="mb-4 flex flex-col items-center justify-center rounded-sm border p-2 no-underline shadow-sm w-72"
-                    placeholder="Password"
+                    placeholder="Contraseña (8 caracteres mínimo)"
                     autoComplete="password"
                     secureTextEntry={true}
                     onChangeText={(text) => setPassword(text)}
